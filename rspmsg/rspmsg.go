@@ -17,6 +17,8 @@ import (
 	"fmt"
 )
 
+const VERSION = "0.1.0"
+
 type RspStatus string
 
 const StatusSuccessful RspStatus = "S"
