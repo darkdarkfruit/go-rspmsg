@@ -247,3 +247,116 @@ func TestRspMsg_SetDataMap(t *testing.T) {
 		})
 	}
 }
+
+func TestRspMsg_SetData(t *testing.T) {
+	type fields struct {
+		Status RspStatus
+		Data   interface{}
+		Code   interface{}
+		Desc   interface{}
+		Meta   interface{}
+	}
+	type args struct {
+		data interface{}
+	}
+	rspmsg := NewS()
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   *RspMsg
+	}{
+		{
+			name:   "set data",
+			fields: fields{Status: rspmsg.Status, Data: rspmsg.Data},
+			args:   args{data: "set"},
+			want:   rspmsg,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			rspmsg := &RspMsg{
+				Status: tt.fields.Status,
+				Data:   tt.fields.Data,
+				Code:   tt.fields.Code,
+				Desc:   tt.fields.Desc,
+				Meta:   tt.fields.Meta,
+			}
+			if got := rspmsg.SetData(tt.args.data); got.Data != "set" {
+				t.Errorf("RspMsg.SetData() = \n%v, \nwant\n%v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRspMsg_MarkSuccessful(t *testing.T) {
+	type fields struct {
+		Status RspStatus
+		Data   interface{}
+		Code   interface{}
+		Desc   interface{}
+		Meta   interface{}
+	}
+	rspmsg := NewF()
+	tests := []struct {
+		name   string
+		fields fields
+		want   *RspMsg
+	}{
+		{
+			name:   "mark successful",
+			fields: fields{Status: rspmsg.Status},
+			want:   rspmsg,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			rspmsg := &RspMsg{
+				Status: tt.fields.Status,
+				Data:   tt.fields.Data,
+				Code:   tt.fields.Code,
+				Desc:   tt.fields.Desc,
+				Meta:   tt.fields.Meta,
+			}
+			if got := rspmsg.MarkSuccessful(); got.IsFailed() {
+				t.Errorf("RspMsg.MarkSuccessful() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRspMsg_MarkFailed(t *testing.T) {
+	type fields struct {
+		Status RspStatus
+		Data   interface{}
+		Code   interface{}
+		Desc   interface{}
+		Meta   interface{}
+	}
+	rspmsg := NewS()
+	tests := []struct {
+		name   string
+		fields fields
+		want   *RspMsg
+	}{
+		{
+			name:   "mark failed",
+			fields: fields{Status: rspmsg.Status},
+			want:   rspmsg,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			rspmsg := &RspMsg{
+				Status: tt.fields.Status,
+				Data:   tt.fields.Data,
+				Code:   tt.fields.Code,
+				Desc:   tt.fields.Desc,
+				Meta:   tt.fields.Meta,
+			}
+			if got := rspmsg.MarkFailed(); got.IsSuccessful() {
+				t.Errorf("RspMsg.MarkFailed() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

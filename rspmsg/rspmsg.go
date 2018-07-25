@@ -93,6 +93,24 @@ func (rspmsg *RspMsg) IsFailed() bool {
 	return !rspmsg.IsSuccessful()
 }
 
+// for chaining
+func (rspmsg *RspMsg) SetData(data interface{}) *RspMsg {
+	rspmsg.Data = data
+	return rspmsg
+}
+
+// for chaining
+func (rspmsg *RspMsg) MarkSuccessful() *RspMsg {
+	rspmsg.Status = StatusSuccessful
+	return rspmsg
+}
+
+// for chaining
+func (rspmsg *RspMsg) MarkFailed() *RspMsg {
+	rspmsg.Status = StatusFailed
+	return rspmsg
+}
+
 func (rspmsg *RspMsg) ToJson() (bs []byte, err error) {
 	return json.Marshal(rspmsg)
 }
