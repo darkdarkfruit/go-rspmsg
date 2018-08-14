@@ -360,3 +360,39 @@ func TestRspMsg_MarkFailed(t *testing.T) {
 		})
 	}
 }
+
+func TestRspMsg_Error(t *testing.T) {
+	type fields struct {
+		Status RspStatus
+		Data   interface{}
+		Code   interface{}
+		Desc   interface{}
+		Meta   interface{}
+	}
+	rspmsg := NewF()
+	tests := []struct {
+		name   string
+		fields fields
+		want   string
+	}{
+		{
+			name:   "test rspmsg error-interface",
+			fields: fields{Status: rspmsg.Status},
+			want:   `{"status":"F"}`,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			rspmsg := &RspMsg{
+				Status: tt.fields.Status,
+				Data:   tt.fields.Data,
+				Code:   tt.fields.Code,
+				Desc:   tt.fields.Desc,
+				Meta:   tt.fields.Meta,
+			}
+			if got := rspmsg.Error(); got != tt.want {
+				t.Errorf("RspMsg.Error() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

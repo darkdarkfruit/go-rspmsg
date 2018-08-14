@@ -125,3 +125,10 @@ func (rspmsg *RspMsg) SetDataMap(key string, value interface{}) bool {
 	t[key] = value
 	return true
 }
+
+
+// error interface
+func (rspmsg *RspMsg) Error() string {
+	bs, _ := json.Marshal(rspmsg)
+	return string(bs)
+}
