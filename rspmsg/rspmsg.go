@@ -100,6 +100,24 @@ func (rspmsg *RspMsg) SetData(data interface{}) *RspMsg {
 }
 
 // for chaining
+func (rspmsg *RspMsg) SetCode(Code interface{}) *RspMsg {
+	rspmsg.Code = Code
+	return rspmsg
+}
+
+// for chaining
+func (rspmsg *RspMsg) SetDesc(Desc interface{}) *RspMsg {
+	rspmsg.Desc = Desc
+	return rspmsg
+}
+
+// for chaining
+func (rspmsg *RspMsg) SetMeta(Meta interface{}) *RspMsg {
+	rspmsg.Meta = Meta
+	return rspmsg
+}
+
+// for chaining
 func (rspmsg *RspMsg) MarkSuccessful() *RspMsg {
 	rspmsg.Status = StatusSuccessful
 	return rspmsg
